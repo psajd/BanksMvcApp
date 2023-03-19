@@ -10,7 +10,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{ThymeleafConfig.class};
+        return new Class[]{ThymeleafConfig.class, BeanConfig.class};
     }
 
     @Override

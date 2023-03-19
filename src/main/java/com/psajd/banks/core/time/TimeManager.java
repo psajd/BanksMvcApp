@@ -8,18 +8,20 @@ import java.util.List;
 import com.psajd.banks.core.notifications.IObserver;
 import com.psajd.banks.core.notifications.Observable;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 /**
  * class for working with time in bank
  */
+@Component
 public class TimeManager implements Observable<TimeManager> {
 
     private final List<IObserver<TimeManager>> _observers = new ArrayList<>();
     @Getter
     private LocalDate now;
 
-    public TimeManager(LocalDate now) {
-        this.now = now;
+    public TimeManager() {
+        this.now = LocalDate.now();
     }
 
     /**
@@ -27,8 +29,8 @@ public class TimeManager implements Observable<TimeManager> {
      *
      * @param years add years
      * @param month add month
-     * @param days   add days
-     * */
+     * @param days  add days
+     */
     public void Add(int years, int month, int days) {
         now = now.plusYears(years);
         now = now.plusMonths(month);

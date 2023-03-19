@@ -13,10 +13,13 @@ import com.psajd.banks.core.configuration.BankConfig;
 import com.psajd.banks.core.time.TimeManager;
 import com.psajd.banks.core.transactions.Transaction;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * bank service to manage banks
  */
+@Component
 public class CentralBank {
 
     private static CentralBank centralBank;
@@ -25,20 +28,9 @@ public class CentralBank {
     @Getter
     private final TimeManager timeManager;
 
-    public CentralBank() {
-        timeManager = new TimeManager(LocalDate.now());
-    }
-
-    /**
-     * Singleton. Get instance of central bank
-     *
-     * @return instance of bank
-     */
-    public static CentralBank getInstance() {
-        if (centralBank == null) {
-            centralBank = new CentralBank();
-        }
-        return centralBank;
+    @Autowired
+    public CentralBank(TimeManager timeManager) {
+        this.timeManager = timeManager;
     }
 
     /**
@@ -105,7 +97,7 @@ public class CentralBank {
      */
     public Bank findBank(Account account) {
         return banks.stream().filter(x -> x.getAccounts().contains(account)).findFirst()
-            .orElse(null);
+                .orElse(null);
     }
 
     /**
@@ -116,7 +108,7 @@ public class CentralBank {
      */
     public Bank findBank(String name) {
         return banks.stream().filter(x -> x.getBankName().equals(name)).findFirst()
-            .orElse(null);
+                .orElse(null);
     }
 
     /**
@@ -136,7 +128,7 @@ public class CentralBank {
      */
     public Transaction findTransaction(UUID id) {
         return getTransactions().stream().filter(x -> x.getId().equals(id)).findFirst()
-            .orElse(null);
+                .orElse(null);
     }
 
     /**
