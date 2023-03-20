@@ -22,7 +22,7 @@ public class TimeController {
     @GetMapping("")
     public String getCurrentTime(Model model) {
         model.addAttribute("currentTime", timeService.getCurrentDate());
-        return "time/index";
+        return "time/currentTime";
     }
 
     @PostMapping("/add")

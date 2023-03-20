@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: htmlHead">
+    <meta charset="UTF-8">
+    <title>time</title>
+</head>
+
+<body>
+
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="container">
+    <div class="bg-light">
+        <div class="align-content-md-center">
+            <p>Current time: </p>
+            <p th:text="${currentTime}"></p>
+            <br/>
+            <form method="POST" action="/time/add">
+                <p>
+                    <label for="years">Years</label>
+                    <input type="text" name="years" id="years">
+                </p>
+                <p>
+                    <label for="months">Months</label>
+                    <input type="text" name="months" id="months">
+                </p>
+                <p>
+                    <label for="days">Days</label>
+                    <input type="text" name="days" id="days">
+                </p>
+                <p><input type="submit" value="submit"></p>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/scripts :: script"></div>
+
+</body>
+</html>
