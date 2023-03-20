@@ -1,7 +1,6 @@
 package com.psajd.banks.controllers;
 
 import com.psajd.banks.core.bankEntities.Bank;
-import com.psajd.banks.core.bankEntities.CentralBank;
 import com.psajd.banks.core.configuration.BankConfig;
 import com.psajd.banks.services.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class BankController {
     public String getBanks(Model model) {
         List<Bank> banks = bankService.getBanks();
         model.addAttribute("banks", banks);
-        return "banks/bankList";
+        return "banks/banksList";
     }
 
     @GetMapping("/new")
