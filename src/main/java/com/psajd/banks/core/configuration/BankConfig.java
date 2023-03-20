@@ -15,8 +15,7 @@ import lombok.ToString;
  * bank rates configurations
  */
 @Getter
-@Setter(AccessLevel.PACKAGE)
-@AllArgsConstructor
+@Setter
 @ToString
 @NoArgsConstructor
 public class BankConfig {

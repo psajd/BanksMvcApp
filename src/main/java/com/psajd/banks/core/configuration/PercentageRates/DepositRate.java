@@ -1,15 +1,13 @@
 package com.psajd.banks.core.configuration.PercentageRates;
 
 import com.psajd.banks.core.exceptions.PercentageRateException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * bank condition for deposit type of account
  */
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

@@ -3,12 +3,14 @@ package com.psajd.banks.core.configuration.PercentageRates;
 import com.psajd.banks.core.exceptions.TransactionException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 /**
  * bank condition for debit type of account
  */
 @Getter
 @ToString
+@Setter
 @NoArgsConstructor
 public class DebitRate implements IRate {
 

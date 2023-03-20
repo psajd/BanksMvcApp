@@ -33,14 +33,7 @@ public class CentralBank {
         this.timeManager = timeManager;
     }
 
-    /**
-     * create new bank
-     *
-     * @param bankName bank name
-     * @return instance of new bank
-     */
-    public Bank createBank(String bankName) {
-        var bank = new Bank(timeManager, new BankConfig(), UUID.randomUUID(), bankName);
+    public Bank addBank(Bank bank) {
         banks.add(bank);
         return bank;
     }
@@ -100,6 +93,11 @@ public class CentralBank {
                 .orElse(null);
     }
 
+    public Bank findBank(UUID uuid) {
+        return banks.stream().filter(x -> x.getId().equals(uuid)).findFirst()
+                .orElse(null);
+    }
+
     /**
      * find bank by name
      *
@@ -153,5 +151,10 @@ public class CentralBank {
             return null;
         }
         return bank.findClient(account);
+    }
+
+    public void deleteBank(UUID uuid) {
+        Bank bank = findBank(uuid);
+        banks.remove(bank);
     }
 }

@@ -1,14 +1,6 @@
 package com.psajd.banks.core.bankEntities;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import com.psajd.banks.core.accounts.*;
 import com.psajd.banks.core.clients.Client;
 import com.psajd.banks.core.configuration.BankConfig;
@@ -17,24 +9,41 @@ import com.psajd.banks.core.notifications.IObserver;
 import com.psajd.banks.core.notifications.Notification;
 import com.psajd.banks.core.notifications.Observable;
 import com.psajd.banks.core.time.TimeManager;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
+import java.util.*;
+
 @ToString
-@AllArgsConstructor
 public class Bank implements Observable<Notification> {
 
     private final Map<Client, List<Account>> accountsByClient = new HashMap<>();
     private final List<IObserver<Notification>> _subscribers = new ArrayList<>();
     @Getter
+    @Setter
     private TimeManager timeManager;
     @Getter
-    private BankConfig bankConfig;
+    @Setter
+    private BankConfig bankConfig = new BankConfig();
+
+    @Setter
     @Getter
     private UUID id;
+
+    @Setter
     @Getter
     private String bankName;
+
+    public Bank(TimeManager timeManager, BankConfig bankConfig, UUID id, String bankName) {
+        this.timeManager = timeManager;
+        this.bankConfig = bankConfig;
+        this.id = id;
+        this.bankName = bankName;
+    }
+
+    public Bank() {
+    }
 
 
     public List<Client> getClients() {
@@ -75,8 +84,8 @@ public class Bank implements Observable<Notification> {
      */
     Client findClient(Account account) {
         var optional = accountsByClient.entrySet().stream()
-            .filter(x -> x.getValue().contains(account))
-            .findFirst().orElse(null);
+                .filter(x -> x.getValue().contains(account))
+                .findFirst().orElse(null);
         if (optional == null) {
             return null;
         }
@@ -107,16 +116,16 @@ public class Bank implements Observable<Notification> {
         Account account;
         switch (accountType) {
             case DEBIT -> account = new DebitAccount(UUID.randomUUID(), timeManager.getNow(),
-                bankConfig.getExpirationDate(), 0,
-                bankConfig.getDebitRate()
+                    bankConfig.getExpirationDate(), 0,
+                    bankConfig.getDebitRate()
             );
             case CREDIT -> account = new CreditAccount(UUID.randomUUID(), timeManager.getNow(),
-                bankConfig.getExpirationDate(), 0,
-                bankConfig.getCreditRate()
+                    bankConfig.getExpirationDate(), 0,
+                    bankConfig.getCreditRate()
             );
             case DEPOSIT -> account = new DepositAccount(UUID.randomUUID(), timeManager.getNow(),
-                bankConfig.getExpirationDate(), 0,
-                bankConfig.getDepositRate()
+                    bankConfig.getExpirationDate(), 0,
+                    bankConfig.getDepositRate()
             );
             default -> throw new BankException("wrong account type");
         }

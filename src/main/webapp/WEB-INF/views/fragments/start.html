@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
-    <title>AddTime</title>
+    <title>Home</title>
 </head>
-
+<body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
 <div class="row vh-100">
     <div class="container bg-light">
-        <br/>
-        <h1>Time added successfully</h1>
-        <a href="/time">Current time</a>
+
     </div>
 </div>
 
 
-<div th:replace="fragments/scripts :: script"></div>
-
-
+<div th:replace="fragments/scripts :: htmlBody"></div>
 </body>
 </html>

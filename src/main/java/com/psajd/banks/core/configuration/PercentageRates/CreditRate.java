@@ -1,22 +1,31 @@
 package com.psajd.banks.core.configuration.PercentageRates;
 
 import com.psajd.banks.core.exceptions.PercentageRateException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+
 /**
  * bank condition for credit type of account
  */
 @Getter
+@Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class CreditRate implements IRate {
 
+    private String asdf;
     private double lowerBorder = -10000;
     private double upperBorder = 1000000;
     private double commission = 10;
+
+    public CreditRate(double lowerBorder, double upperBorder, double commission) {
+        this.lowerBorder = lowerBorder;
+        this.upperBorder = upperBorder;
+        this.commission = commission;
+    }
+
+    public CreditRate() {
+    }
 
     /**
      * counts interest by money amount

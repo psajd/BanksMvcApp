@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
     <title>Error</title>
 </head>
 <body>
-<p>something went wrong, try again</p>
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
-<p th:text="${exception}"></p>
+<div class="row vh-100">
+    <div class="container bg-light" >
+        <br/>
+        <h1>something went wrong, try again</h1>
+        <h5 th:text="${exception}"></h5>
+    </div>
+</div>
+
+
+<div th:replace="fragments/scripts :: script"></div>
+
 </body>
 </html>
