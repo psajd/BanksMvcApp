@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: htmlHead">
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
 <div class="row vh-100">
-  <div class="container bg-light">
+    <div class="container bg-light">
+        <h1>New client</h1>
+        <form method="POST" th:action="@{/banks/{bankId}/clients(bankId=${bankId})}" th:object="${client}" class="col card p-3 mb-5">
 
-  </div>
+            <div class="form-group">
+                <p class="font-weight-bold">Debit rate</p>
+                <p>
+                    <label for="name">Name</label>
+                    <input th:field="*{clientName}" type="text" name="name"
+                           id="name">
+                </p>
+                <p>
+                    <label for="passport">Passport</label>
+                    <input th:field="*{passport}" type="text" name="passport"
+                           id="passport">
+                </p>
+            </div>
+
+            <br>
+            <p class="font-weight-bold h4">Optional fields</p>
+            <br>
+
+            <div class="form-group">
+                <p>
+                    <label for="address">Address</label>
+                    <input th:field="*{address}" type="text" name="address"
+                           id="address">
+                </p>
+                <p>
+                    <label for="phoneNumber">Phone number</label>
+                    <input th:field="*{phoneNumber}" type="text" name="phoneNumber"
+                           id="phoneNumber">
+                </p>
+            </div>
+
+
+            <p><input type="submit" class="btn btn-primary" value="submit"></p>
+        </form>
+    </div>
 </div>
 
 

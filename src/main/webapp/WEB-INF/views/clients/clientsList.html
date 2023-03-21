@@ -2,14 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
+    <title>Clients</title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
-
 <div class="row vh-100">
     <div class="container bg-light">
-        <div class="header">
 
+        <h2 class="text-md-center" th:text="${header}"></h2>
+
+        <div class="float-right">
+            <a class="btn btn-primary header" th:href="@{/banks/{id}/clients/new(id=${bank.getId()})}">
+                addClient
+            </a>
         </div>
 
         <table class="table table-striped">
@@ -21,11 +26,44 @@
                 <th scope="col">Address</th>
                 <th scope="col">Passport</th>
                 <th scope="col">Phone Number</th>
+                <th scope="col">delete</th>
+                <th scope="col">edit</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="client : ${bank.getClients()}">
+                <td class="row-cols-3" th:text="${clientStat.count}"></td>
+                <td>
+                    <a th:text="${client.getClientName()}"
+                       th:href="@{/banks/{bankId}/clients/{clientId}(bankId=${bank.getId()})(clientId=${client.getId()})}"></a>
+                </td>
+                <td th:text="${client.getId()}">
+                </td>
+                <td th:text="${client.getAddress()}">
+                </td>
+                <td th:text="${client.getPassport()}">
+                </td>
+                <td th:text="${client.getPhoneNumber()}">
+                </td>
 
+                <td>
+                    <form th:method="delete"
+                          th:action="@{/banks/{bankId}/clients/{clientId}(bankId=${bank.getId()})(clientId=${client.getId()})}"
+                          th:object="${client}">
+                        <input type="submit" value="X" class="btn btn-danger">
+                    </form>
+                </td>
+
+                <td>
+                    <a th:method="GET"
+                       th:href="@{/banks/{bankId}/clients/{clientId}/edit/(bankId=${bank.getId()})(clientId=${client.getId()})}"
+                       class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-pen" viewBox="0 0 16 16">
+                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                        </svg>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
