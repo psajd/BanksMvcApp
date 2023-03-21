@@ -8,11 +8,9 @@ import com.psajd.banks.core.exceptions.BankException;
 import com.psajd.banks.core.notifications.IObserver;
 import com.psajd.banks.core.notifications.Notification;
 import com.psajd.banks.core.notifications.Observable;
-import com.psajd.banks.core.time.TimeManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -31,7 +29,7 @@ public class Bank implements Observable<Notification> {
 
     private UUID id;
 
-    private String bankName;
+    private String bankName = "bank";
 
     public Bank(BankConfig bankConfig, UUID id, String bankName) {
         this.bankConfig = bankConfig;
@@ -147,6 +145,24 @@ public class Bank implements Observable<Notification> {
         }
 
         notifyObservers();
+    }
+
+    public Client getClient(UUID uuid) {
+        return getClients().stream().filter(x -> x.getId().equals(uuid)).findFirst().orElse(null);
+    }
+
+    public void removeClient(Client client) {
+        accountsByClient.remove(client);
+    }
+
+    public Client updateClient(Client newClient) {
+        Client oldClient = getClient(newClient.getId());
+        oldClient.setClientName(newClient.getClientName() == null ? oldClient.getClientName() : newClient.getClientName());
+        oldClient.setAddress(newClient.getAddress() == null ? oldClient.getAddress() : newClient.getAddress());
+        oldClient.setPassport(newClient.getPassport() == null ? oldClient.getPassport() : newClient.getPassport());
+        oldClient.setPhoneNumber(newClient.getPhoneNumber() == null ? oldClient.getPhoneNumber() : newClient.getPhoneNumber());
+
+        return oldClient;
     }
 
     /**

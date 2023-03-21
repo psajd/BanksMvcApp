@@ -7,18 +7,15 @@ import java.util.UUID;
 
 import com.psajd.banks.core.notifications.IObserver;
 import com.psajd.banks.core.notifications.Notification;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * bank client with collection of notification
  */
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 @Builder
 @ToString
 @EqualsAndHashCode

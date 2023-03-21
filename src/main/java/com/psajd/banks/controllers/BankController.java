@@ -59,7 +59,7 @@ public class BankController {
         return "banks/bank";
     }
 
-    @GetMapping("/{id}/edit/")
+    @GetMapping("/{id}/edit")
     public String editBank(Model model, @PathVariable String id) {
         Bank bank = bankService.getBank(UUID.fromString(id));
         model.addAttribute("bank", bank);

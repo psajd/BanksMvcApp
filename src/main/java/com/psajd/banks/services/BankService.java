@@ -37,10 +37,6 @@ public class BankService {
         return centralBank.findBank(uuid);
     }
 
-    public TimeManager getTimeManager() {
-        return centralBank.getTimeManager();
-    }
-
     public void deleteBank(UUID uuid) {
         centralBank.deleteBank(uuid);
     }
