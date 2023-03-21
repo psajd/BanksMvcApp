@@ -13,6 +13,7 @@ import com.psajd.banks.core.time.TimeManager;
 import com.psajd.banks.core.transactions.Transaction;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -20,6 +21,7 @@ import lombok.ToString;
  */
 @EqualsAndHashCode
 @Getter
+@Setter
 @ToString
 public abstract class Account implements IObserver<TimeManager> {
 

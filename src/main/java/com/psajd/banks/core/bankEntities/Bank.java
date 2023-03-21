@@ -97,7 +97,7 @@ public class Bank implements Observable<Notification> {
             throw new BankException("client already exist");
         }
 
-        accountsByClient.put(client, new ArrayList<Account>());
+        accountsByClient.put(client, new ArrayList<>());
         addObserver(client);
     }
 
@@ -153,9 +153,6 @@ public class Bank implements Observable<Notification> {
 
     public void removeClient(UUID uuid) {
         Client client = getClient(uuid);
-        int chash = client.hashCode();
-        int a = accountsByClient.keySet().stream().findFirst().get().hashCode();
-        boolean eq = client.equals(accountsByClient.keySet().stream().findFirst().get());
         accountsByClient.remove(client);
         subscribers.remove(client);
     }
@@ -170,10 +167,32 @@ public class Bank implements Observable<Notification> {
         return oldClient;
     }
 
+    public List<Account> getAccounts(Client client) {
+        return accountsByClient.get(client);
+    }
+
+    public Account getAccount(UUID uuid) {
+        return getAccounts().stream().filter(x -> x.getId().equals(uuid)).findFirst().orElse(null);
+    }
+
     /**
      * notify all observers
      */
     private void notifyObservers() {
         subscribers.forEach(x -> x.update(new Notification(new Date(), bankConfig.toString())));
+    }
+
+    public void removeAccount(Client client, Account account) {
+        accountsByClient.get(client).remove(account);
+    }
+
+    public Account updateAccount(Account account) {
+        Account oldAccount = getAccount(account.getId());
+        oldAccount.setRate(account.getRate());
+        oldAccount.setLastUpdate(account.getLastUpdate());
+        oldAccount.setExpirationDate(account.getExpirationDate());
+        oldAccount.setFoundationDate(account.getFoundationDate());
+        oldAccount.setMoneyAmount(account.getMoneyAmount());
+        return oldAccount;
     }
 }

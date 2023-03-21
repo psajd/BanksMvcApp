@@ -1,17 +1,75 @@
 package com.psajd.banks.controllers;
 
+import com.psajd.banks.core.accounts.Account;
+import com.psajd.banks.core.accounts.AccountType;
+import com.psajd.banks.core.bankEntities.Bank;
+import com.psajd.banks.core.clients.Client;
 import com.psajd.banks.services.AccountService;
+import com.psajd.banks.services.BankService;
+import com.psajd.banks.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Controller
-@RequestMapping("/banks/{bankId}/clients/{clientId}")
+@RequestMapping("/banks/{bankId}/clients/{clientId}/accounts")
 public class AccountController {
-    private AccountService accountService;
+    private final AccountService accountService;
+
+    private final BankService bankService;
+
+    private final ClientService clientService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, BankService bankService, ClientService clientService) {
         this.accountService = accountService;
+        this.bankService = bankService;
+        this.clientService = clientService;
+    }
+
+    @GetMapping("")
+    public String getAccounts(Model model, @PathVariable String bankId, @PathVariable String clientId) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        model.addAttribute("accountsList", accountService.getAccounts(bank, clientService.getClient(bank, UUID.fromString(clientId))));
+        return "accounts/accountList";
+    }
+
+    @GetMapping("/newAccount")
+    public String newAccountForm(Model model, @PathVariable String bankId, @PathVariable String clientId) {
+        return "accounts/newAccount";
+    }
+
+    @PostMapping("")
+    public String addNewAccount(Model model, @PathVariable String bankId, @PathVariable String clientId, String accountType) {
+        AccountType type = switch (accountType) {
+            case "credit" -> AccountType.CREDIT;
+            case "debit" -> AccountType.DEBIT;
+            case "deposit" -> AccountType.DEPOSIT;
+            default -> throw new RuntimeException("type not supported");
+        };
+
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        Client client = clientService.getClient(bank, UUID.fromString(clientId));
+        accountService.addNewAccount(bank, client, type);
+        return "redirect:/banks/{bankId}/clients/{clientId}/accounts";
+    }
+
+    @GetMapping("/{accountId}")
+    public String getAccount(Model model, @PathVariable String bankId, @PathVariable String clientId, @PathVariable String accountId) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        Account account = accountService.getAccount(bank, UUID.fromString(clientId));
+        model.addAttribute("account", account);
+        return "accounts/account";
+    }
+
+    @DeleteMapping("/{accountId}")
+    public String deleteAccount(Model model, @PathVariable String bankId, @PathVariable String clientId, @PathVariable String accountId) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        Client client = clientService.getClient(bank, UUID.fromString(clientId));
+        accountService.deleteAccount(bank, client, UUID.fromString(accountId));
+        return "accounts/accountList";
     }
 }
