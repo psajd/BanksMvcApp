@@ -12,31 +12,28 @@ import com.psajd.banks.core.time.TimeManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.*;
 
+@Getter
+@Setter
 @ToString
+@Component
 public class Bank implements Observable<Notification> {
 
     private final Map<Client, List<Account>> accountsByClient = new HashMap<>();
     private final List<IObserver<Notification>> _subscribers = new ArrayList<>();
-    @Getter
-    @Setter
-    private TimeManager timeManager;
-    @Getter
-    @Setter
+
     private BankConfig bankConfig = new BankConfig();
 
-    @Setter
-    @Getter
     private UUID id;
 
-    @Setter
-    @Getter
     private String bankName;
 
-    public Bank(TimeManager timeManager, BankConfig bankConfig, UUID id, String bankName) {
-        this.timeManager = timeManager;
+    public Bank(BankConfig bankConfig, UUID id, String bankName) {
         this.bankConfig = bankConfig;
         this.id = id;
         this.bankName = bankName;
@@ -112,18 +109,18 @@ public class Bank implements Observable<Notification> {
      * @param accountType type of new account
      * @param client      new client
      */
-    Account createAccount(Client client, AccountType accountType) {
+    Account createAccount(Client client, AccountType accountType, LocalDate now) {
         Account account;
         switch (accountType) {
-            case DEBIT -> account = new DebitAccount(UUID.randomUUID(), timeManager.getNow(),
+            case DEBIT -> account = new DebitAccount(UUID.randomUUID(), now,
                     bankConfig.getExpirationDate(), 0,
                     bankConfig.getDebitRate()
             );
-            case CREDIT -> account = new CreditAccount(UUID.randomUUID(), timeManager.getNow(),
+            case CREDIT -> account = new CreditAccount(UUID.randomUUID(), now,
                     bankConfig.getExpirationDate(), 0,
                     bankConfig.getCreditRate()
             );
-            case DEPOSIT -> account = new DepositAccount(UUID.randomUUID(), timeManager.getNow(),
+            case DEPOSIT -> account = new DepositAccount(UUID.randomUUID(), now,
                     bankConfig.getExpirationDate(), 0,
                     bankConfig.getDepositRate()
             );
@@ -135,7 +132,6 @@ public class Bank implements Observable<Notification> {
         }
 
         accountsByClient.get(client).add(account);
-        timeManager.addObserver(account);
         return account;
     }
 

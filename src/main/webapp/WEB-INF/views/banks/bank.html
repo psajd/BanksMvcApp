@@ -8,9 +8,74 @@
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
 <div class="row vh-100">
-    <div class="container bg-light">
+    <div class="container-xl bg-light">
+        <h2 class="text-md-center" th:text="${bank.getBankName()}"></h2>
 
+        <h4>Bank properties</h4>
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-dark">
+                <td>Credit lower border</td>
+                <td th:text="${bank.bankConfig.creditRate.lowerBorder}"></td>
+            </tr>
+
+            <tr>
+                <td>Credit upper border</td>
+                <td th:text="${bank.bankConfig.creditRate.upperBorder}"></td>
+            </tr>
+            <tr>
+                <td>Credit commission</td>
+                <td th:text="${bank.bankConfig.creditRate.commission}"></td>
+            </tr>
+            <tr class="table-dark">
+                <td>Debit lower border</td>
+                <td th:text="${bank.bankConfig.debitRate.lowerBorder}"></td>
+            </tr>
+            <tr>
+                <td>Debit upper border</td>
+                <td th:text="${bank.bankConfig.debitRate.upperBorder}"></td>
+            </tr>
+            <tr>
+                <td>Debit percentage</td>
+                <td th:text="${bank.bankConfig.debitRate.percentage}"></td>
+            </tr>
+
+            <tr class="table-dark">
+                <td>Deposit lower border</td>
+                <td th:text="${bank.bankConfig.depositRate.lowerBorder}"></td>
+            </tr>
+            <tr>
+                <td>Deposit middle border</td>
+                <td th:text="${bank.bankConfig.depositRate.middleBorder}"></td>
+            </tr>
+            <tr>
+                <td>Deposit upper border</td>
+                <td th:text="${bank.bankConfig.depositRate.upperBorder}"></td>
+            </tr>
+            <tr>
+                <td>Deposit lower percentage</td>
+                <td th:text="${bank.bankConfig.depositRate.lowerPercentage}"></td>
+            </tr>
+            <tr>
+                <td>Deposit middle percentage</td>
+                <td th:text="${bank.bankConfig.depositRate.middlePercentage}"></td>
+            </tr>
+            <tr>
+                <td>Deposit upper percentage</td>
+                <td th:text="${bank.bankConfig.depositRate.upperPercentage}"></td>
+            </tr>
+
+            </tbody>
+        </table>
     </div>
+
+
 </div>
 
 

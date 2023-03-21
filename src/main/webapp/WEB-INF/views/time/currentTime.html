@@ -10,31 +10,34 @@
 
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
-<div class="container">
-    <div class="bg-light">
-        <div class="align-items-md-center">
-            <p>Current time: </p>
-            <p th:text="${currentTime}"></p>
+<div class="row vh-100">
+    <div class="container bg-light">
+        <h2 class="header" href="#">Current time: </h2>
+        <h4 th:text="${currentTime}"></h4>
+        <div class="align-items-md-center col card p-3 mb-5 vh-100">
             <br/>
-            <form method="POST" action="/time/add">
+            <h4>Time machine</h4>
+            <form method="POST" action="/time/add" class="justify-content-center-center">
                 <p>
                     <label for="years">Years</label>
-                    <input type="text" name="years" id="years">
+                    <input type="text" name="years" id="years" value="0">
                 </p>
                 <p>
                     <label for="months">Months</label>
-                    <input type="text" name="months" id="months">
+                    <input type="text" name="months" id="months" value="0">
                 </p>
                 <p>
                     <label for="days">Days</label>
-                    <input type="text" name="days" id="days">
+                    <input type="text" name="days" id="days" value="0">
                 </p>
-                <p><input type="submit" value="submit"></p>
+                <p><input type="submit" value="Add" class="btn btn-secondary"></p>
 
             </form>
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <div th:replace="fragments/scripts :: script"></div>
 

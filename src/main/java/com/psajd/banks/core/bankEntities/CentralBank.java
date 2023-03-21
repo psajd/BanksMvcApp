@@ -1,11 +1,6 @@
 package com.psajd.banks.core.bankEntities;
 
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import com.psajd.banks.core.accounts.Account;
 import com.psajd.banks.core.accounts.AccountType;
 import com.psajd.banks.core.clients.Client;
@@ -15,6 +10,10 @@ import com.psajd.banks.core.transactions.Transaction;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * bank service to manage banks
@@ -57,7 +56,9 @@ public class CentralBank {
      * @return instance of account
      */
     public Account createAccount(Bank bank, Client client, AccountType accountType) {
-        return bank.createAccount(client, accountType);
+        Account account = bank.createAccount(client, accountType, timeManager.getNow());
+        timeManager.addObserver(account);
+        return account;
     }
 
     /**
@@ -156,5 +157,14 @@ public class CentralBank {
     public void deleteBank(UUID uuid) {
         Bank bank = findBank(uuid);
         banks.remove(bank);
+    }
+
+    public Bank updateBank(Bank bank) {
+        Bank oldBank = findBank(bank.getId());
+        if (oldBank != null) {
+            oldBank.setBankConfig(bank.getBankConfig());
+            oldBank.setBankName(bank.getBankName());
+        }
+        return oldBank;
     }
 }

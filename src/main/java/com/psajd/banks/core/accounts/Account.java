@@ -24,7 +24,6 @@ import lombok.ToString;
 public abstract class Account implements IObserver<TimeManager> {
 
     protected UUID id;
-
     protected LocalDate foundationDate;
     protected LocalDate lastUpdate;
     protected LocalDate expirationDate;
@@ -36,7 +35,7 @@ public abstract class Account implements IObserver<TimeManager> {
     protected IRate rate;
 
     public Account(UUID id, LocalDate foundationDate,
-        LocalDate expirationDate, double moneyAmount, IRate rate) {
+                   LocalDate expirationDate, double moneyAmount, IRate rate) {
         this.id = id;
         this.foundationDate = foundationDate;
         this.lastUpdate = foundationDate;

@@ -45,7 +45,7 @@ public class BankService {
         centralBank.deleteBank(uuid);
     }
 
-    public void updateBank() {
-
+    public Bank updateBank(Bank bank) {
+        return centralBank.updateBank(bank);
     }
 }

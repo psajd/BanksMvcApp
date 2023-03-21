@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
+
+<div class="row vh-100">
+    <div class="container bg-light">
+        <h1>Edit bank <th th:text="${bank.getBankName()}"></th></h1>
+        <form th:method="PATCH" th:action="@{/banks/{id}(id=${bank.getId()})}" th:object="${bank}" class="col card p-3 mb-5">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input th:field="*{bankName}" type="text" name="name" id="name">
+            </div>
+
+            <br>
+            <p class="font-weight-bold">Optional fields</p>
+            <br>
+
+            <div class="form-group">
+
+                <p class="font-weight-bold">Credit rate</p>
+                <p>
+                    <label for="creditLowerBorder">Credit lower border (y.e)</label>
+                    <input th:field="*{bankConfig.debitRate.lowerBorder}" type="text" name="creditLowerBorder" id="creditLowerBorder">
+                </p>
+                <p>
+                    <label for="creditUpperBorder">Credit upper border (y.e)</label>
+                    <input th:field="*{bankConfig.creditRate.upperBorder}" type="text" name="creditUpperBorder" id="creditUpperBorder">
+                </p>
+                <p>
+                    <label for="creditCommission">Credit Commission (y.e)</label>
+                    <input th:field="*{bankConfig.creditRate.commission}" type="text" name="creditCommission" id="creditCommission">
+                </p>
+            </div>
+
+
+            <div class="form-group">
+                <p class="font-weight-bold">Debit rate</p>
+                <p>
+                    <label for="debitUpperBorder">Debit upper border (y.e)</label>
+                    <input th:field="*{bankConfig.debitRate.upperBorder}" type="text" name="debitUpperBorder" id="debitUpperBorder">
+                </p>
+                <p>
+                    <label for="debitPercentage">Debit percentage (%)</label>
+                    <input th:field="*{bankConfig.debitRate.percentage}" type="text" name="debitPercentage" id="debitPercentage">
+                </p>
+            </div>
+
+
+            <div class="form-group">
+                <p class="font-weight-bold">Deposit rate</p>
+                <p>
+                    <label for="depositLowerPercentage">Deposit lower percentage (%)</label>
+                    <input th:field="*{bankConfig.depositRate.lowerPercentage}" type="text" name="depositLowerPercentage" id="depositLowerPercentage">
+                </p>
+                <p>
+                    <label for="depositMiddleBorder">Deposit middle border (y.e)</label>
+                    <input th:field="*{bankConfig.depositRate.middleBorder}" type="text" name="depositMiddleBorder" id="depositMiddleBorder">
+                </p>
+                <p>
+                    <label for="depositMiddlePercentage">Deposit middle percentage (%)</label>
+                    <input th:field="*{bankConfig.depositRate.middlePercentage}" type="text" name="depositMiddlePercentage" id="depositMiddlePercentage">
+                </p>
+                <p>
+                    <label for="depositUpperBorder">Deposit upper border (y.e)</label>
+                    <input th:field="*{bankConfig.depositRate.upperBorder}" type="text" name="depositUpperBorder" id="depositUpperBorder">
+                </p>
+                <p>
+                    <label for="depositUpperPercentage">Deposit upper percentage (%)</label>
+                    <input th:field="*{bankConfig.depositRate.upperPercentage}" type="text" name="depositUpperPercentage" id="depositUpperPercentage">
+                </p>
+            </div>
+
+
+
+
+            <p><input type="submit" class="btn btn-primary" value="submit"></p>
+
+        </form>
+    </div>
+</div>
+
+<div th:replace="fragments/scripts :: htmlBody"></div>
 </body>
 </html>

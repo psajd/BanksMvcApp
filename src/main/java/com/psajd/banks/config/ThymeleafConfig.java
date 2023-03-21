@@ -1,8 +1,11 @@
 package com.psajd.banks.config;
 
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -36,4 +39,5 @@ public class ThymeleafConfig {
         templateResolver.setTemplateMode("HTML5");
         return templateResolver;
     }
+
 }

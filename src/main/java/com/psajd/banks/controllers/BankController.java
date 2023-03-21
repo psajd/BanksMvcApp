@@ -4,6 +4,7 @@ import com.psajd.banks.core.bankEntities.Bank;
 import com.psajd.banks.core.configuration.BankConfig;
 import com.psajd.banks.services.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/banks")
 public class BankController {
+
     private BankService bankService;
 
     @Autowired
@@ -32,7 +34,6 @@ public class BankController {
     public String newBankForm(Model model) {
         Bank bank = new Bank();
         bank.setBankConfig(new BankConfig());
-        bank.setTimeManager(bankService.getTimeManager());
         bank.setId(UUID.randomUUID());
         model.addAttribute("bank", bank);
         return "banks/newBank";
@@ -55,22 +56,27 @@ public class BankController {
     public String getBank(@PathVariable String id, Model model) {
         Bank bank = bankService.getBank(UUID.fromString(id));
         model.addAttribute("bank", bank);
-        return "";
+        return "banks/bank";
     }
 
-    @GetMapping("{id}/edit")
-    public String editBank(@PathVariable String id) {
-        return "";
+    @GetMapping("/{id}/edit/")
+    public String editBank(Model model, @PathVariable String id) {
+        Bank bank = bankService.getBank(UUID.fromString(id));
+        model.addAttribute("bank", bank);
+        return "banks/bankEdit";
     }
 
-    @PatchMapping("{id}")
-    public String updateBank(@PathVariable String id) {
-        return "";
+    @PatchMapping("/{id}")
+    public String updateBank(@PathVariable String id, Model model, @ModelAttribute Bank bank) {
+        Bank findBank = bankService.getBank(UUID.fromString(id));
+        bankService.updateBank(bank);
+        return "redirect:{id}";
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public String deleteBank(@PathVariable String id) {
-        return "";
+        bankService.deleteBank(UUID.fromString(id));
+        return "redirect:/banks";
     }
 
 }
