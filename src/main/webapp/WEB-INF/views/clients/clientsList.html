@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: htmlHead">
+    <meta charset="UTF-8">
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="row vh-100">
+    <div class="container bg-light">
+        <div class="header">
+
+        </div>
+
+        <table class="table table-striped">
+            <thead class="table-dark table-header">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">UUID</th>
+                <th scope="col">Address</th>
+                <th scope="col">Passport</th>
+                <th scope="col">Phone Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${bank.getClients()}">
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/scripts :: htmlBody"></div>
+</body>
+</html>

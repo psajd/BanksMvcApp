@@ -9,9 +9,21 @@
 
 <div class="row vh-100">
     <div class="container-xl bg-light">
-        <h2 class="text-md-center" th:text="${bank.getBankName()}"></h2>
+        <h2 class="text-md-center border border-5 rounded-3 border-dark" th:text="${bank.getBankName()}"></h2>
 
-        <h4>Bank properties</h4>
+        <div class="header">
+            <div class="float-right">
+                <a class="btn btn-primary header" th:href="@{/banks/{id}/clients(id=${bank.getId()})}">
+                    Clients
+                </a>
+            </div>
+
+            <div class="justify-content-center">
+                <h2>Bank Properties</h2>
+            </div>
+
+        </div>
+
         <table class="table table-striped">
             <thead class="table-dark">
             <tr>

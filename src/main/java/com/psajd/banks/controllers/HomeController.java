@@ -1,15 +1,21 @@
 package com.psajd.banks.controllers;
 
-import org.springframework.http.HttpStatus;
+import com.psajd.banks.core.bankEntities.CentralBank;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
+    private final CentralBank centralBank;
+
+    @Autowired
+    public HomeController(CentralBank centralBank) {
+        this.centralBank = centralBank;
+    }
 
     public String handleNotFoundException() {
         return "";
@@ -18,5 +24,15 @@ public class HomeController {
     @GetMapping
     public String homePage() {
         return "/index";
+    }
+
+    @GetMapping("/accounts")
+    public String getAllAccounts() {
+        return "accounts/allAccounts";
+    }
+
+    @GetMapping("/clients")
+    public String getAllClients() {
+        return "clients/allClients";
     }
 }
