@@ -1,15 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: htmlHead">
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
 <div class="row vh-100">
-  <div class="container bg-light">
+    <div class="container bg-light">
+        <h2 class="text-md-center border border-5 rounded-3 border-dark" th:text="${client.clientName}"></h2>
 
-  </div>
+        <div class="header">
+            <div class="float-right">
+                <a class="btn btn-primary header"
+                   th:href="@{/banks/{bankId}/clients/{clientId}/accounts(bankId=${bank.getId()}, clientId=${client.getId()})}">
+                    Accounts
+                </a>
+            </div>
+            <div class="float-left">
+                <a class="btn btn-primary header"
+                   th:href="@{/banks/{bankId}/clients/{clientId}/notifications(bankId=${bank.getId()}, clientId=${client.getId()})}">
+                    Notifications
+                </a>
+            </div>
+
+            <div class="justify-content-center">
+                <h2>Client info</h2>
+            </div>
+
+        </div>
+
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>id</td>
+                <td th:text="${client.getId()}"></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>address</td>
+                <td th:text="${client.getAddress()}"></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>name</td>
+                <td th:text="${client.getClientName()}"></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>passport</td>
+                <td th:text="${client.getPassport()}"></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>phone number</td>
+                <td th:text="${client.getPhoneNumber()}"></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

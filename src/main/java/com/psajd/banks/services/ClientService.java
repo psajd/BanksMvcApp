@@ -35,7 +35,7 @@ public class ClientService {
     }
 
     public void deleteClient(Bank bank, UUID uuid) {
-        bank.removeClient(getClient(bank, uuid));
+        bank.removeClient(uuid);
     }
 
     public Client updateClient(Bank bank, Client client) {

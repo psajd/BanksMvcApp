@@ -32,10 +32,7 @@ public class BankController {
 
     @GetMapping("/new")
     public String newBankForm(Model model) {
-        Bank bank = new Bank();
-        bank.setBankConfig(new BankConfig());
-        bank.setId(UUID.randomUUID());
-        model.addAttribute("bank", bank);
+        model.addAttribute("bank", new Bank());
         return "banks/newBank";
     }
 

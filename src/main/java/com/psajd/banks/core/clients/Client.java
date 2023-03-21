@@ -3,6 +3,7 @@ package com.psajd.banks.core.clients;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import com.psajd.banks.core.notifications.IObserver;
@@ -18,7 +19,6 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-@EqualsAndHashCode
 public class Client implements IObserver<Notification> {
 
     private UUID id;
@@ -45,5 +45,17 @@ public class Client implements IObserver<Notification> {
     @Override
     public void update(Notification notification) {
         notifications.add(notification);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client client)) return false;
+        return getId().equals(client.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

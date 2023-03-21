@@ -38,7 +38,6 @@ public class ClientController {
             throw new RuntimeException("bank not found");
         }
         Client client = new Client();
-        client.setId(UUID.randomUUID());
         model.addAttribute("client", new Client());
         return "clients/newClient";
     }
@@ -48,11 +47,7 @@ public class ClientController {
         if (client.getClientName().isBlank() || client.getPassport().isBlank()) {
             throw new RuntimeException("name or passport is null");
         }
-        // FIXME: 21.03.2023 не забыть убрать
-        client.setClientName("name");
-        client.setAddress("address");
-        client.setPhoneNumber("phoneNumber");
-        client.setPassport("passport");
+        client.setId(UUID.randomUUID());
         clientService.addNewClient(bankService.getBank(UUID.fromString(bankId)), client);
         return "redirect:/banks/{bankId}/clients";
     }
@@ -62,10 +57,11 @@ public class ClientController {
         Bank bank = bankService.getBank(UUID.fromString(bankId));
         Client client = clientService.getClient(bank, UUID.fromString(clientId));
         model.addAttribute("client", client);
+        model.addAttribute("bank", bank);
         return "clients/client";
     }
 
-    @GetMapping("/{clientId}/edit/")
+    @GetMapping("/{clientId}/edit")
     public String editClient(@PathVariable String bankId, Model model, @PathVariable String clientId) {
         Bank bank = bankService.getBank(UUID.fromString(bankId));
         Client client = clientService.getClient(bank, UUID.fromString(clientId));

@@ -23,7 +23,7 @@ import java.util.*;
 public class Bank implements Observable<Notification> {
 
     private final Map<Client, List<Account>> accountsByClient = new HashMap<>();
-    private final List<IObserver<Notification>> _subscribers = new ArrayList<>();
+    private final List<IObserver<Notification>> subscribers = new ArrayList<>();
 
     private BankConfig bankConfig = new BankConfig();
 
@@ -56,8 +56,8 @@ public class Bank implements Observable<Notification> {
      */
     @Override
     public void addObserver(IObserver<Notification> o) {
-        if (!_subscribers.contains(o)) {
-            _subscribers.add(o);
+        if (!subscribers.contains(o)) {
+            subscribers.add(o);
         }
     }
 
@@ -68,7 +68,7 @@ public class Bank implements Observable<Notification> {
      */
     @Override
     public void removeObserver(IObserver<Notification> o) {
-        _subscribers.remove(o);
+        subscribers.remove(o);
     }
 
     /**
@@ -151,8 +151,13 @@ public class Bank implements Observable<Notification> {
         return getClients().stream().filter(x -> x.getId().equals(uuid)).findFirst().orElse(null);
     }
 
-    public void removeClient(Client client) {
+    public void removeClient(UUID uuid) {
+        Client client = getClient(uuid);
+        int chash = client.hashCode();
+        int a = accountsByClient.keySet().stream().findFirst().get().hashCode();
+        boolean eq = client.equals(accountsByClient.keySet().stream().findFirst().get());
         accountsByClient.remove(client);
+        subscribers.remove(client);
     }
 
     public Client updateClient(Client newClient) {
@@ -169,6 +174,6 @@ public class Bank implements Observable<Notification> {
      * notify all observers
      */
     private void notifyObservers() {
-        _subscribers.forEach(x -> x.update(new Notification(new Date(), bankConfig.toString())));
+        subscribers.forEach(x -> x.update(new Notification(new Date(), bankConfig.toString())));
     }
 }

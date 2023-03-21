@@ -25,14 +25,4 @@ public class HomeController {
     public String homePage() {
         return "/index";
     }
-
-    @GetMapping("/accounts")
-    public String getAllAccounts() {
-        return "accounts/allAccounts";
-    }
-
-    @GetMapping("/clients")
-    public String getAllClients() {
-        return "clients/allClients";
-    }
 }
