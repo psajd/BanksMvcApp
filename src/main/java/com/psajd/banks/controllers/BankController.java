@@ -68,7 +68,6 @@ public class BankController {
 
     @PatchMapping("/{id}")
     public String updateBank(@PathVariable String id, Model model, @ModelAttribute Bank bank) {
-        Bank findBank = bankService.getBank(UUID.fromString(id));
         bankService.updateBank(bank);
         return "redirect:{id}";
     }

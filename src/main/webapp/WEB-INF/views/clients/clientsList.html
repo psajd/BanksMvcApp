@@ -35,7 +35,7 @@
                 <td class="row-cols-3" th:text="${clientStat.count}"></td>
                 <td>
                     <a th:text="${client.getClientName()}"
-                       th:href="@{/banks/{bankId}/clients/{clientId}(bankId=${bank.getId()})(clientId=${client.getId()})}"></a>
+                       th:href="@{/banks/{bankId}/clients/{clientId}(bankId=${bank.getId()}, clientId=${client.getId()})}"></a>
                 </td>
                 <td th:text="${client.getId()}">
                 </td>
@@ -48,7 +48,7 @@
 
                 <td>
                     <form th:method="delete"
-                          th:action="@{/banks/{bankId}/clients/{clientId}(bankId=${bank.getId()})(clientId=${client.getId()})}"
+                          th:action="@{/banks/{bankId}/clients/{clientId}(bankId=${bank.getId()}, clientId=${client.getId()})}"
                           th:object="${client}">
                         <input type="submit" value="X" class="btn btn-danger">
                     </form>
@@ -56,7 +56,7 @@
 
                 <td>
                     <a th:method="GET"
-                       th:href="@{/banks/{bankId}/clients/{clientId}/edit/(bankId=${bank.getId()})(clientId=${client.getId()})}"
+                       th:href="@{/banks/{bankId}/clients/{clientId}/edit/(bankId=${bank.getId()}, clientId=${client.getId()})}"
                        class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-pen" viewBox="0 0 16 16">

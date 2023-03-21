@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
+    <title>New Client</title>
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
@@ -9,7 +10,7 @@
 <div class="row vh-100">
     <div class="container bg-light">
         <h1>New client</h1>
-        <form method="POST" th:action="@{/banks/{bankId}/clients(bankId=${bankId})}" th:object="${client}" class="col card p-3 mb-5">
+        <form method="post" th:action="@{/banks/{bankId}/clients(bankId=${bankId})}" th:object="${client}" class="col card p-3 mb-5">
 
             <div class="form-group">
                 <p class="font-weight-bold">Debit rate</p>

@@ -4,7 +4,6 @@ import com.psajd.banks.core.bankEntities.Bank;
 import com.psajd.banks.core.clients.Client;
 import com.psajd.banks.services.BankService;
 import com.psajd.banks.services.ClientService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,35 +37,48 @@ public class ClientController {
         if (bankService.getBank(UUID.fromString(bankId)) == null) {
             throw new RuntimeException("bank not found");
         }
+        Client client = new Client();
+        client.setId(UUID.randomUUID());
         model.addAttribute("client", new Client());
-        model.addAttribute("bankIdFromController", bankId);
         return "clients/newClient";
     }
 
     @PostMapping("")
     public String addNewClient(@PathVariable String bankId, @ModelAttribute Client client) {
-        client.setId(UUID.randomUUID());
         if (client.getClientName().isBlank() || client.getPassport().isBlank()) {
             throw new RuntimeException("name or passport is null");
         }
+        // FIXME: 21.03.2023 не забыть убрать
+        client.setClientName("name");
+        client.setAddress("address");
+        client.setPhoneNumber("phoneNumber");
+        client.setPassport("passport");
         clientService.addNewClient(bankService.getBank(UUID.fromString(bankId)), client);
         return "redirect:/banks/{bankId}/clients";
     }
 
     @GetMapping("/{clientId}")
-    public String getClient(@PathVariable String bankId, @PathVariable String clientId) {
+    public String getClient(Model model, @PathVariable String bankId, @PathVariable String clientId) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        Client client = clientService.getClient(bank, UUID.fromString(clientId));
+        model.addAttribute("client", client);
         return "clients/client";
     }
 
     @GetMapping("/{clientId}/edit/")
     public String editClient(@PathVariable String bankId, Model model, @PathVariable String clientId) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        Client client = clientService.getClient(bank, UUID.fromString(clientId));
+        model.addAttribute("client", client);
         return "clients/clientEdit";
     }
 
     @PatchMapping("/{clientId}")
-    public String updateClient(@PathVariable String bankId, @PathVariable String clientId) {
-
-        return "redirect:{id}";
+    public String updateClient(@PathVariable String bankId, @PathVariable String clientId, @ModelAttribute Client client) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        client.setId(UUID.fromString(clientId));
+        clientService.updateClient(bank, client);
+        return "redirect:/banks/{bankId}/clients/{clientId}";
     }
 
     @DeleteMapping("/{clientId}")
