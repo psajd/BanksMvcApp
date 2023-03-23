@@ -15,8 +15,9 @@ import java.util.UUID;
 public class DepositAccount extends Account {
 
     public DepositAccount(UUID id, LocalDate foundationDate, LocalDate expirationDate,
-        double moneyAmount, IRate rate) {
+                          double moneyAmount, IRate rate) {
         super(id, foundationDate, expirationDate, moneyAmount, rate);
+        accountType = AccountType.DEPOSIT;
     }
 
     /**

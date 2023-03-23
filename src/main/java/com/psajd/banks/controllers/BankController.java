@@ -36,6 +36,7 @@ public class BankController {
         return "banks/newBank";
     }
 
+    // FIXME: 21.03.2023 не забыть удалить, штука юзлесс но на всякий висит
     /*@RequestParam("name") String name, @RequestParam("name") String creditLowerBorder,
                              @RequestParam("name") String creditUpperBorder, @RequestParam("name") String creditCommission,
                              @RequestParam("name") String debitUpperBorder, @RequestParam("name") String debitPercentage,

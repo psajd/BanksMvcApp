@@ -30,6 +30,7 @@ public abstract class Account implements IObserver<TimeManager> {
     protected LocalDate lastUpdate;
     protected LocalDate expirationDate;
 
+    protected AccountType accountType;
     protected double moneyAmount;
 
     private final List<Transaction> transactions = new ArrayList<>();

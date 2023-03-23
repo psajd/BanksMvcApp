@@ -17,6 +17,7 @@ public class DebitAccount extends Account {
     public DebitAccount(UUID id, LocalDate foundationDate, LocalDate expirationDate,
                         double moneyAmount, IRate rate) {
         super(id, foundationDate, expirationDate, moneyAmount, rate);
+        accountType = AccountType.DEBIT;
     }
 
     /**

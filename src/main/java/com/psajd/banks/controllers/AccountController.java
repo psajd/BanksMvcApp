@@ -37,13 +37,14 @@ public class AccountController {
         return "accounts/accountList";
     }
 
-    @GetMapping("/newAccount")
+    @GetMapping("/new")
     public String newAccountForm(Model model, @PathVariable String bankId, @PathVariable String clientId) {
+        model.addAttribute("accountType", "");
         return "accounts/newAccount";
     }
 
     @PostMapping("")
-    public String addNewAccount(Model model, @PathVariable String bankId, @PathVariable String clientId, String accountType) {
+    public String addNewAccount(@RequestParam("accountType") String accountType, Model model, @PathVariable String bankId, @PathVariable String clientId) {
         AccountType type = switch (accountType) {
             case "credit" -> AccountType.CREDIT;
             case "debit" -> AccountType.DEBIT;
@@ -62,7 +63,7 @@ public class AccountController {
         Bank bank = bankService.getBank(UUID.fromString(bankId));
         Account account = accountService.getAccount(bank, UUID.fromString(clientId));
         model.addAttribute("account", account);
-        return "accounts/account";
+        return "accountTransatcion";
     }
 
     @DeleteMapping("/{accountId}")

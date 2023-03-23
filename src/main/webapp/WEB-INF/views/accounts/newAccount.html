@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
+<div class="row vh-100">
+    <div class="container bg-light">
+        <h1>Account creating</h1>
+        <form method="post"
+              th:action="@{/banks/{bankId}/clients/{clientId}/accounts(clientId=${clientId}, bankId=${bankId})}"
+              class="col card p-3 mb-5">
+
+            <div class="form-group align-items-md-center">
+                <p class="font-weight-bold">Debit rate</p>
+                <p>
+                    <label for="accountType">
+                        <select name="accountType" id="accountType">
+                            <option value="debit">Debit</option>
+                            <option value="credit">Credit</option>
+                            <option value="deposit">Deposit</option>
+                        </select>
+                    </label>
+                </p>
+
+            </div>
+
+            <p><input type="submit" class="btn btn-primary" value="submit"></p>
+        </form>
+    </div>
+</div>
+
+
+<div th:replace="fragments/scripts :: htmlBody"></div>
 </body>
 </html>

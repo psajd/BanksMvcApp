@@ -7,6 +7,7 @@ import com.psajd.banks.core.exceptions.TransactionException;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
 /**
  * implementation of Account,
  * contains credit percentage rate
@@ -14,8 +15,9 @@ import java.util.UUID;
 public class CreditAccount extends Account {
 
     public CreditAccount(UUID id, LocalDate foundationDate, LocalDate expirationDate,
-        double moneyAmount, IRate rate) {
+                         double moneyAmount, IRate rate) {
         super(id, foundationDate, expirationDate, moneyAmount, rate);
+        accountType = AccountType.CREDIT;
     }
 
     /**

@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
+<div class="row vh-100">
+    <div class="container bg-light">
+        <h2 class="text-md-center">Account list</h2>
+
+        <div class="float-right">
+            <a class="btn btn-primary header"
+               th:href="@{/banks/{bankId}/clients/{clientId}/accounts/new(bankId=${bankId}, clientId=${clientId})}">
+                Add account
+            </a>
+        </div>
+
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">Id</th>
+                <th scope="col">Foundation date</th>
+                <th scope="col">Last update</th>
+                <th scope="col">Expiration date</th>
+                <th scope="col">Money amount</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="account : ${accountsList}">
+                <td th:text="${accountStat.count}"></td>
+                <td th:text="${account.accountType}"></td>
+                <td th:text="${account.getId()}"></td>
+                <td th:text="${account.getFoundationDate()}"></td>
+                <td th:text="${account.getLastUpdate()}"></td>
+                <td th:text="${account.getExpirationDate()}"></td>
+                <td th:text="${account.getMoneyAmount()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/scripts :: htmlBody"></div>
 </body>
 </html>
