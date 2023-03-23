@@ -16,4 +16,8 @@ public enum TransactionStatus {
     public String toString() {
         return "TransactionStatus{" + "val='" + val + '\'' + '}';
     }
+
+    public String getVal() {
+        return val;
+    }
 }

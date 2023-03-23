@@ -162,7 +162,7 @@ public class CentralBank {
     public Bank updateBank(Bank bank) {
         Bank oldBank = findBank(bank.getId());
         if (oldBank != null) {
-            oldBank.setBankConfig(bank.getBankConfig());
+            oldBank.updateBankConfig(bank.getBankConfig());
             oldBank.setBankName(bank.getBankName());
         }
         return oldBank;

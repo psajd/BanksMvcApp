@@ -14,10 +14,14 @@ public class WithdrawTransaction extends Transaction {
     @Getter
     private final Account src;
 
+    @Getter
+    private final TransactionType type = TransactionType.WITHDRAW;
+
     public WithdrawTransaction(Account src, double money, UUID id) {
         super(id, money);
         this.src = src;
     }
+
     /**
      * do withdraw transaction operations
      *
@@ -35,6 +39,7 @@ public class WithdrawTransaction extends Transaction {
         src.getTransactions().add(this);
         return this;
     }
+
     /**
      * undo withdraw transaction operations
      *

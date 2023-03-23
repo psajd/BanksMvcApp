@@ -15,6 +15,8 @@ public class ReplenishmentTransaction extends Transaction {
 
     @Getter
     private final Account src;
+    @Getter
+    private final TransactionType type = TransactionType.REPLENISHMENT;
 
     public ReplenishmentTransaction(Account src, double money, UUID id) {
         super(id, money);

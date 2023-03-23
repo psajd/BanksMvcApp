@@ -16,6 +16,8 @@ public class TransferTransaction extends Transaction {
     private final Account src;
     private final Account dest;
 
+    @Getter
+    private final TransactionType type = TransactionType.TRANSFER;
     public TransferTransaction(Account src, Account dest, double money, UUID id) {
         super(id, money);
         this.dest = dest;

@@ -1,6 +1,7 @@
 package com.psajd.banks.core.transactions;
 
 import java.util.UUID;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -13,6 +14,7 @@ public abstract class Transaction {
 
     protected final UUID id;
     protected TransactionStatus status = TransactionStatus.ON_WORK;
+    protected TransactionType type;
     protected final double money;
 
     protected Transaction(UUID id, double money) {
@@ -26,6 +28,7 @@ public abstract class Transaction {
      * @return returns this
      */
     public abstract Transaction doTransaction();
+
     /**
      * undo transaction operations
      *

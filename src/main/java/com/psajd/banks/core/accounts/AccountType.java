@@ -18,4 +18,8 @@ public enum AccountType {
     public String toString() {
         return "AccountType{" + "val='" + val + '\'' + '}';
     }
+
+    public String getVal() {
+        return val;
+    }
 }

@@ -4,6 +4,9 @@ import com.psajd.banks.core.accounts.Account;
 import com.psajd.banks.core.accounts.AccountType;
 import com.psajd.banks.core.bankEntities.Bank;
 import com.psajd.banks.core.clients.Client;
+import com.psajd.banks.core.transactions.ReplenishmentTransaction;
+import com.psajd.banks.core.transactions.Transaction;
+import com.psajd.banks.core.transactions.TransactionStatus;
 import com.psajd.banks.services.AccountService;
 import com.psajd.banks.services.BankService;
 import com.psajd.banks.services.ClientService;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -54,16 +58,19 @@ public class AccountController {
 
         Bank bank = bankService.getBank(UUID.fromString(bankId));
         Client client = clientService.getClient(bank, UUID.fromString(clientId));
-        accountService.addNewAccount(bank, client, type);
+        Account account = accountService.addNewAccount(bank, client, type);
+        new ReplenishmentTransaction(account, 1000, UUID.randomUUID()).doTransaction();
+        new ReplenishmentTransaction(account, 10, UUID.randomUUID()).doTransaction();
         return "redirect:/banks/{bankId}/clients/{clientId}/accounts";
     }
 
     @GetMapping("/{accountId}")
     public String getAccount(Model model, @PathVariable String bankId, @PathVariable String clientId, @PathVariable String accountId) {
         Bank bank = bankService.getBank(UUID.fromString(bankId));
-        Account account = accountService.getAccount(bank, UUID.fromString(clientId));
+        Account account = accountService.getAccount(bank, UUID.fromString(accountId));
         model.addAttribute("account", account);
-        return "accountTransatcion";
+        model.addAttribute("onDone", TransactionStatus.ON_DONE);
+        return "accounts/accountTransactions";
     }
 
     @DeleteMapping("/{accountId}")
@@ -72,5 +79,15 @@ public class AccountController {
         Client client = clientService.getClient(bank, UUID.fromString(clientId));
         accountService.deleteAccount(bank, client, UUID.fromString(accountId));
         return "accounts/accountList";
+    }
+
+    @PatchMapping("/{accountId}/transactions/{transactionId}")
+    public String undoTransaction(@PathVariable String accountId, @PathVariable String bankId, @PathVariable String transactionId) {
+        Bank bank = bankService.getBank(UUID.fromString(bankId));
+        Account account = accountService.getAccount(bank, UUID.fromString(accountId));
+        UUID id = UUID.fromString(transactionId);
+        Transaction transaction = account.getTransactions().stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+        Objects.requireNonNull(transaction).undo();
+        return "redirect:/banks/{bankId}/clients/{clientId}/accounts/{accountId}";
     }
 }
