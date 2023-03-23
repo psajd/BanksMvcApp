@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: htmlHead">
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="row vh-100">
+    <div class="container bg-light">
+        <h2 class="text-md-center">Transactions</h2>
+
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Money Amount</th>
+                <th scope="col">Id</th>
+                <th scope="col">Undo</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="myTransaction : ${account.getTransactions()}">
+                <td th:text="${myTransactionStat.count}"></td>
+                <td th:text="${myTransaction.getType().getVal()}"></td>
+                <td th:text="${myTransaction.getStatus().getVal()}"></td>
+                <td th:text="${myTransaction.getMoney()}"></td>
+                <td th:text="${myTransaction.getId()}"></td>
+                <td>
+                    <form th:if="${myTransaction.getStatus() == onDone}"
+                            th:method="patch"
+                          th:action="@{/banks/{bankId}/clients/{clientId}/accounts/{accountId}/transactions/{transactionId}(bankId=${bankId}, transactionId=${myTransaction.getId()}, accountId=${accountId}, clientId=${clientId})}">
+                        <input type="submit" class="btn btn-primary" value="submit">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/scripts :: script"></div>
+</body>
+</html>

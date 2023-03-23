@@ -11,7 +11,7 @@
         <h2 class="text-md-center">Account list</h2>
 
         <div class="float-right">
-            <a class="btn btn-primary header"
+            <a class="btn btn-primary header mt-2"
                th:href="@{/banks/{bankId}/clients/{clientId}/accounts/new(bankId=${bankId}, clientId=${clientId})}">
                 Add account
             </a>
@@ -27,18 +27,29 @@
                 <th scope="col">Last update</th>
                 <th scope="col">Expiration date</th>
                 <th scope="col">Money amount</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
 
             <tr th:each="account : ${accountsList}">
                 <td th:text="${accountStat.count}"></td>
-                <td th:text="${account.accountType}"></td>
+                <td>
+                    <a th:text="${account.accountType.getVal()}"
+                       th:href="@{/banks/{bankId}/clients/{clientId}/accounts/{accountId}(bankId=${bankId}, accountId=${account.getId()}, clientId=${clientId})}"></a>
+                </td>
                 <td th:text="${account.getId()}"></td>
                 <td th:text="${account.getFoundationDate()}"></td>
                 <td th:text="${account.getLastUpdate()}"></td>
                 <td th:text="${account.getExpirationDate()}"></td>
                 <td th:text="${account.getMoneyAmount()}"></td>
+                <td>
+                    <form th:method="delete"
+                          th:action="@{/banks/{bankId}/clients/{clientId}/accounts/{accountId}(bankId=${bankId}, accountId=${account.getId()}, clientId=${clientId})}"
+                          th:object="${account}">
+                        <input type="submit" value="X" class="btn btn-danger">
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -46,6 +57,6 @@
 </div>
 
 
-<div th:replace="fragments/scripts :: htmlBody"></div>
+<div th:replace="fragments/scripts :: script"></div>
 </body>
 </html>

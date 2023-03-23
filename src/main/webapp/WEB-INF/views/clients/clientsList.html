@@ -12,7 +12,7 @@
         <h2 class="text-md-center" th:text="${header}"></h2>
 
         <div class="float-right">
-            <a class="btn btn-primary header" th:href="@{/banks/{id}/clients/new(id=${bank.getId()})}">
+            <a class="btn btn-primary header mt-2" th:href="@{/banks/{id}/clients/new(id=${bank.getId()})}">
                 addClient
             </a>
         </div>
@@ -71,6 +71,6 @@
 </div>
 
 
-<div th:replace="fragments/scripts :: htmlBody"></div>
+<div th:replace="fragments/scripts :: script"></div>
 </body>
 </html>
