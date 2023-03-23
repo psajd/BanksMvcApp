@@ -63,10 +63,6 @@ public class DepositAccount extends Account {
             throw new TransactionException("money < 0");
         }
 
-        if (moneyAmount - money < 0) {
-            throw new TransactionException("money amount < 0");
-        }
-
         moneyAmount += money - rate.countCommission(money);
     }
 

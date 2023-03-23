@@ -5,7 +5,6 @@ import com.psajd.banks.core.accounts.AccountType;
 import com.psajd.banks.core.bankEntities.Bank;
 import com.psajd.banks.core.bankEntities.CentralBank;
 import com.psajd.banks.core.clients.Client;
-import com.psajd.banks.dao.AccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +14,10 @@ import java.util.UUID;
 @Component
 public class AccountService {
 
-    private CentralBank centralBank;
-    private AccountDao accountDao;
+    private final CentralBank centralBank;
 
     @Autowired
-    public AccountService(AccountDao accountDao, CentralBank centralBank) {
-        this.accountDao = accountDao;
+    public AccountService(CentralBank centralBank) {
         this.centralBank = centralBank;
     }
 
@@ -41,10 +38,7 @@ public class AccountService {
         bank.removeAccount(client, getAccount(bank, uuid));
     }
 
-    public Account updateAccount(Bank bank, Account account) {
-        Account acc = bank.updateAccount(account);
-
-        return acc;
+    public Account getAccount(UUID uuid) {
+        return centralBank.getAccounts().stream().filter(x -> x.getId().equals(uuid)).findFirst().orElse(null);
     }
-
 }

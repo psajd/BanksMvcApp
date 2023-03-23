@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: htmlHead">
+    <meta charset="UTF-8">
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="row vh-100">
+    <div class="container bg-light">
+        <div class="align-items-md-center col card p-3 mb-5 vh-100">
+            <br/>
+            <br/>
+            <br/>
+            <h2>Transfer transaction</h2>
+            <form method="POST" action="/transactions/transfer" class="justify-content-center-center">
+                <br/>
+                <br/>
+                <p>
+                    <label for="srcAccountId">Source account ID: </label>
+                    <input type="text" name="srcAccountId" id="srcAccountId">
+                </p>
+                <br/>
+                <br/>
+                <p>
+                    <label for="dstAccountId">Destination account ID: </label>
+                    <input type="text" name="dstAccountId" id="dstAccountId">
+                </p>
+                <br/>
+                <br/>
+                <p>
+                    <label for="moneyAmount">Money amount: </label>
+                    <input type="text" name="moneyAmount" id="moneyAmount">
+                </p>
+                <br/>
+                <br/>
+                <p><input type="submit" value="Add" class="btn btn-secondary"></p>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="fragments/scripts :: script"></div>
+</body>
+</html>

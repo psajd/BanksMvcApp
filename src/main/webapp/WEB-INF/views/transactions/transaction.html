@@ -3,16 +3,64 @@
 <head th:replace="fragments/head :: htmlHead">
     <meta charset="UTF-8">
     <title>transactions</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
-<div class="row vh-100">
-    <div class="container bg-light">
+<div class="row vh-100"><!--btn btn-primary-->
+    <div class="mt-6 container bg-light">
+        <br/>
+        <br/>
+        <a class="btn btn-primary  col-2 offset-1" href="/transactions/withdraw">
+            Do withdraw
+        </a>
+        <a class="btn btn-primary col-2 offset-2" href="transactions/replenishment">
+            Do replenishment
+        </a>
+        <a class="btn btn-primary col-2 offset-2" href="transactions/transfer">
+            Do transfer
+        </a>
+        <br/>
+        <br/>
+        <br/>
+        <h2 class="text-md-center">All transactions</h2>
+
+        <br/>
+
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Money Amount</th>
+                <th scope="col">Id</th>
+                <th scope="col">Undo</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="myTransaction : ${transactions}">
+                <td th:text="${myTransactionStat.count}"></td>
+                <td th:text="${myTransaction.getType().getVal()}"></td>
+                <td th:text="${myTransaction.getStatus().getVal()}"></td>
+                <td th:text="${myTransaction.getMoney()}"></td>
+                <td th:text="${myTransaction.getId()}"></td>
+                <td>
+                    <form th:if="${myTransaction.getStatus() == onDone}"
+                          th:method="patch"
+                          th:action="@{/transactions/{transactionId}(transactionId=${myTransaction.getId()})}">
+                        <input type="submit" class="btn btn-primary" value="submit">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
     </div>
 </div>
-
 
 <div th:replace="fragments/scripts :: script"></div>
 </body>

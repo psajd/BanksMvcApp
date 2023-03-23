@@ -2,9 +2,6 @@ package com.psajd.banks.config;
 
 import com.psajd.banks.core.bankEntities.CentralBank;
 import com.psajd.banks.core.time.TimeManager;
-import com.psajd.banks.dao.AccountDao;
-import com.psajd.banks.dao.BankDao;
-import com.psajd.banks.dao.ClientDao;
 import com.psajd.banks.services.AccountService;
 import com.psajd.banks.services.BankService;
 import com.psajd.banks.services.ClientService;
@@ -18,22 +15,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan("com.psajd.banks")
 @EnableWebMvc
 public class BeanConfig {
-
-    @Bean
-    public AccountDao accountDaoBean() {
-        return new AccountDao();
-    }
-
-    @Bean
-    public BankDao bankDaoBean() {
-        return new BankDao();
-    }
-
-    @Bean
-    public ClientDao clientDaoBean() {
-        return new ClientDao();
-    }
-
     @Bean
     public TimeManager timeManagerBean() {
         return new TimeManager();
@@ -46,17 +27,17 @@ public class BeanConfig {
 
     @Bean
     public AccountService accountServiceBean() {
-        return new AccountService(accountDaoBean(), centralBankBean());
+        return new AccountService(centralBankBean());
     }
 
     @Bean
     public BankService bankServiceBean() {
-        return new BankService(bankDaoBean(), centralBankBean());
+        return new BankService(centralBankBean());
     }
 
     @Bean
     public ClientService ClientServiceBean() {
-        return new ClientService(clientDaoBean(), centralBankBean());
+        return new ClientService(centralBankBean());
     }
 
     @Bean

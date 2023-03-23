@@ -3,7 +3,6 @@ package com.psajd.banks.services;
 import com.psajd.banks.core.bankEntities.Bank;
 import com.psajd.banks.core.bankEntities.CentralBank;
 import com.psajd.banks.core.clients.Client;
-import com.psajd.banks.dao.ClientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +12,9 @@ import java.util.UUID;
 @Component
 public class ClientService {
     private CentralBank centralBank;
-    private ClientDao clientDao;
 
     @Autowired
-    public ClientService(ClientDao clientDao, CentralBank centralBank) {
-        this.clientDao = clientDao;
+    public ClientService(CentralBank centralBank) {
         this.centralBank = centralBank;
     }
 

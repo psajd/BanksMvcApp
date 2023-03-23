@@ -2,10 +2,6 @@ package com.psajd.banks.services;
 
 import com.psajd.banks.core.bankEntities.Bank;
 import com.psajd.banks.core.bankEntities.CentralBank;
-import com.psajd.banks.core.configuration.BankConfig;
-import com.psajd.banks.core.time.TimeManager;
-import com.psajd.banks.dao.AccountDao;
-import com.psajd.banks.dao.BankDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +11,10 @@ import java.util.UUID;
 @Component
 public class BankService {
 
-    private CentralBank centralBank;
-    private BankDao bankDao;
+    private final CentralBank centralBank;
 
     @Autowired
-    public BankService(BankDao bankDao, CentralBank centralBank) {
-        this.bankDao = bankDao;
+    public BankService(CentralBank centralBank) {
         this.centralBank = centralBank;
     }
 
