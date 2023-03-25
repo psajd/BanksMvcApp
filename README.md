@@ -6,9 +6,9 @@ This project is a banking application that allows users to manage banks, their c
 supporting multiple types of accounts). Users can perform transactions and cancel them as well. The system also
 implements an observer pattern to notify users of any updates from the banks.
 
+
 ## Technologies
 
----
 
 - Java 17: The core programming language used to develop the application
 
@@ -26,7 +26,7 @@ implements an observer pattern to notify users of any updates from the banks.
 
 ## How to Run the Application
 
----
+
 To run the application, you can follow these steps:
 
 1. Clone the repository to your local machine
